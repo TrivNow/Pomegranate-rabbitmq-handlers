@@ -9,6 +9,7 @@
 
 const path = require('path')
 const _ = require('lodash')
+const _fp = require('lodash/fp')
 
 /**
  *
@@ -27,32 +28,55 @@ exports.metadata = {
 }
 
 exports.plugin = {
-  load: function(Injector, PluginFiles, Options, Logger, RabbitConnection) {
+  load: function(Injector, PluginFiles, Options, Logger, PluginContext, RabbitConnection) {
 
     PluginFiles.fileList()
       .then(function(files){
-        return _.map(files, function(file){
+        return _fp.map(function(file){
           return Injector.inject(require(file.path));
-        })
+        }, files)
       })
       .then(function(queues) {
         return RabbitConnection.createChannel()
           .then(function(channel){
-            _.each(queues, function(queue){
+            PluginContext.channel = channel
+            _fp.each(function(queue){
               channel.assertQueue(queue.name, {durable: true})
-            })
+            }, queues)
             return channel
           })
           .then(function(channel){
-            return _.map(queues, function(queue){
-              return channel.consume(queue.name, queue.handler.bind(channel))
-            })
+            return _fp.map(function(queue){
+              return function(){
+                Logger.log(`${queue.name} handler Starting.`)
+                return channel.consume(queue.name, queue.handler.bind(channel))
+              }
+
+            }, queues)
           })
 
       })
       .then(function(activeQueues){
+        PluginContext.queues = activeQueues
         return true
       })
 
+  },
+  start: function(PluginContext, Logger) {
+    _fp.each((queue) => {
+      if(_fp.isFunction(queue)){
+        queue()
+      }
+    }, PluginContext.queues)
+  },
+  stop: function(PluginContext, Logger) {
+    if(_fp.hasIn('channel.close', PluginContext) && _fp.isFunction(PluginContext.channel.close)){
+      Logger.log('Closing Channel.')
+      return PluginContext.channel.close().then(() => {
+        Logger.log('Channel closed successfully')
+      })
+    }
+    Logger.warn('No channel found.')
+    return true
   }
 }

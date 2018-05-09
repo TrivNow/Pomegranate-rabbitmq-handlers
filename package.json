@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/TrivNow/Pomegranate-rabbitmq-handlers/issues"
   },
-  "homepage": "https://github.com/TrivNow/Pomegranate-rabbitmq-handlers#readme"
+  "homepage": "https://github.com/TrivNow/Pomegranate-rabbitmq-handlers#readme",
+  "peerDependencies": {
+    "pomegranate": "6"
+  }
 }
