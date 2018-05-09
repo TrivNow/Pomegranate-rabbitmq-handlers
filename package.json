@@ -1,0 +1,28 @@
+{
+  "name": "pomegranate-rabbitmq-handlers",
+  "version": "0.0.1",
+  "description": "Mounts handlers to RabbitMQ queues and reacts to them.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Pomegranate",
+    "Plugin",
+    "RabbitMQ",
+    "amqp"
+  ],
+  "author": "Jim <monstertke@paperelectron.com> (http://paperelectron.com/)",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TrivNow/Pomegranate-rabbitmq-handlers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TrivNow/Pomegranate-rabbitmq-handlers/issues"
+  },
+  "homepage": "https://github.com/TrivNow/Pomegranate-rabbitmq-handlers#readme"
+}
