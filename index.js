@@ -80,12 +80,8 @@ exports.plugin = {
           })
       })
       .then(function(activeQueues) {
-        console.log(activeQueues)
         PluginContext.queues = activeQueues
         return true
-      })
-      .catch((err) => {
-        console.log(err)
       })
 
   },
