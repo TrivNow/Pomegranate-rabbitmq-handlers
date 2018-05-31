@@ -15,6 +15,7 @@
   "author": "Jim <monstertke@paperelectron.com> (http://paperelectron.com/)",
   "license": "MIT",
   "dependencies": {
+    "bluebird": "^3.5.1",
     "lodash": "^4.17.10"
   },
   "repository": {
