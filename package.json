@@ -1,6 +1,6 @@
 {
   "name": "pomegranate-rabbitmq-handlers",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Mounts handlers to RabbitMQ queues and reacts to them.",
   "main": "index.js",
   "scripts": {
